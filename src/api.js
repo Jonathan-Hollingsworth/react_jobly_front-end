@@ -72,6 +72,20 @@ class JoblyApi {
     return res.token;
   }
 
+  /** Update the data of a currently existing user */
+
+  static async updateUser(username, password, firstName, lastName, email) {
+    let res = await this.request(`${username}/token`, {password, firstName, lastName, email}, 'patch');
+    return res.user;
+  }
+
+  /** Apply for a job by id as a currently existing user */
+
+  static async applyForJob(username, jobId) {
+    let res = await this.request(`${username}/jobs/${jobId}`, {}, 'post');
+    return res.applied;
+  }
+
   // obviously, you'll add a lot here ...
 }
 
