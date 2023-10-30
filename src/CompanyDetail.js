@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from "react";
-import {useParams} from 'react-router-dom'
+import React, {useState, useEffect, useContext} from "react";
+import {useParams, Redirect} from 'react-router-dom'
 import JoblyApi from "./api";
+import {DataContext} from "./Context";
 import JobList from "./JobList";
 
 function CompanyDetail() {
     const [company, setCompany] = useState({})
+    const {user} = useContext(DataContext)
     const {handle} = useParams()
+
     useEffect(() => {
         async function getCompany() {
           let company = await JoblyApi.getCompany(handle)
@@ -14,6 +17,10 @@ function CompanyDetail() {
         }
         getCompany();
       }, []);
+
+    if (!user.username) {
+        return (<Redirect to='/' />)
+    }
 
     if(company.jobs){
         return (

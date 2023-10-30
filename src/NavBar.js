@@ -1,25 +1,28 @@
 import React, { useContext } from "react";
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import './NavBar.css'
-import DataContext from "./Context";
+import {DataContext, MethodContext} from "./Context";
 
 function NavBar() {
 
-    // const {user} = useContext(DataContext)
+    const {user} = useContext(DataContext)
+    const {logout} = useContext(MethodContext)
+    const history = useHistory()
 
-    // if(!user) {
-    //     return (
-    //         <div>
-    //             <NavLink to='/'>Home</NavLink>
-    //             <NavLink to='/signup'>Signup</NavLink>
-    //             <NavLink to='/login'>Login</NavLink>
-    //         </div>
-    //     )
-    // }
+    if(!user.username) {
+        return (
+            <div className="navbar">
+                <NavLink exact to='/'>Home</NavLink>
+                <NavLink to='/signup'>Signup</NavLink>
+                <NavLink to='/login'>Login</NavLink>
+            </div>
+        )
+    }
 
-    function logout(evt) {
+    function handleLogout(evt) {
         evt.preventDefault();
-
+        logout()
+        history.push('/')
     }
 
 
@@ -29,6 +32,7 @@ function NavBar() {
             <NavLink to='/companies'>Companies</NavLink>
             <NavLink to='/jobs'>Jobs</NavLink>
             <NavLink to='/profile'>Profile</NavLink>
+            <NavLink exact to='/logout' onClick={handleLogout}>Logout</NavLink>
         </div>
     )
 }

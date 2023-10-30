@@ -1,9 +1,15 @@
 import React, {useContext} from "react";
-import DataContext from "./Context";
+import {Redirect} from 'react-router-dom'
+import {DataContext} from "./Context";
 import JobCard from "./JobCard";
 
 function JobList({company}) {
-    const {jobs} = useContext(DataContext)
+    const {jobs, user} = useContext(DataContext)
+
+    if (!user.username) {
+        return (<Redirect to='/' />)
+    }
+
     if(company){
         return(
             <div>
