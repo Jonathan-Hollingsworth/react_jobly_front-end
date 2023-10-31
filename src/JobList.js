@@ -14,7 +14,7 @@ function JobList({company}) {
         return(
             <div>
                 {company.jobs.map(job => (
-                    <JobCard job={job} key={job.id}/>
+                    <JobCard endpoint={`/companies/${company.handle}`} job={job} key={job.id}/>
                 ))}
             </div>
         )
@@ -23,7 +23,7 @@ function JobList({company}) {
     return(
         <div>
             {jobs.map(job => (
-                <JobCard job={job} key={job.id}/>
+                <JobCard endpoint='/jobs' job={job} key={job.id}/>
             ))}
         </div>
     )

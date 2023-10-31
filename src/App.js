@@ -54,6 +54,7 @@ function App() {
     return <h1>Loading &hellip;</h1>;
   }
 
+  /** Call the api to register as a new user */
   async function register({username, password, firstName, lastName, email}) {
     const token = await JoblyApi.signup(username, password, firstName, lastName, email)
     JoblyApi.token = token
@@ -61,6 +62,7 @@ function App() {
     setIsLoading(true);
   }
 
+  /** Call the api to log in as a user */
   async function login({username, password}) {
     const token = await JoblyApi.login(username, password)
     JoblyApi.token = token
@@ -68,21 +70,30 @@ function App() {
     setIsLoading(true);
   }
 
+  /** log out of the front-end application */
   function logout() {
     JoblyApi.token = ''
     setLocalUserToken('')
     setIsLoading(true);
   }
 
+  /** Call the api to update a user */
   async function updateUser(username, {password, firstName, lastName, email}) {
     const user = await JoblyApi.updateUser(username, password, firstName, lastName, email)
     setUser(user)
   }
 
+
+  /** Call the api to apply for a job */
+  async function apply(username, jobId){
+    const applied = await JoblyApi.applyForJob(username, jobId)
+    user.applications.push(applied) //Update front-end user
+  }
+
   return (
     <div className="App">
       <DataContext.Provider value={{jobs, companies, user}}>
-        <MethodContext.Provider value={{register, login, logout, updateUser}}>
+        <MethodContext.Provider value={{register, login, logout, updateUser, apply}}>
           <NavBar />
           <Routes />
         </MethodContext.Provider>
