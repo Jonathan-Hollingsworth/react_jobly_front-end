@@ -17,20 +17,16 @@ function App() {
     
   useEffect(() => {
       async function getData() {
-        console.log(localStorage.token)
         let companies = await JoblyApi.getCompanies()
         let jobs = await JoblyApi.getJobs()
         setCompanies(companies)
         setJobs(jobs)
         setIsLoading(false);
         if (localStorage.token) {
+          JoblyApi.token = localStorage.token
           const decoded = jwtDecode(localStorage.token)
-          console.log(decoded)
           const username = decoded.username
-          console.log(username)
-          console.log(JoblyApi.token)
           const user = await JoblyApi.getUser(username)
-          console.log(user)
           setUser(user)
         }
       }
@@ -41,12 +37,9 @@ function App() {
       async function decodeToken() {
         if (localStorage.token) {
           const decoded = jwtDecode(localStorage.token)
-          console.log(decoded)
           const username = decoded.username
-          console.log(username)
-          console.log(JoblyApi.token)
+          JoblyApi.token = localStorage.token
           const user = await JoblyApi.getUser(username)
-          console.log(user)
           setUser(user)
           setIsLoading(false)
         } else {
@@ -71,23 +64,25 @@ function App() {
   async function login({username, password}) {
     const token = await JoblyApi.login(username, password)
     JoblyApi.token = token
-    console.log(JoblyApi.token)
     setLocalUserToken(token)
-    console.log(localStorage.token)
     setIsLoading(true);
   }
 
   function logout() {
     JoblyApi.token = ''
     setLocalUserToken('')
-    console.log(localStorage.token)
     setIsLoading(true);
+  }
+
+  async function updateUser(username, {password, firstName, lastName, email}) {
+    const user = await JoblyApi.updateUser(username, password, firstName, lastName, email)
+    setUser(user)
   }
 
   return (
     <div className="App">
       <DataContext.Provider value={{jobs, companies, user}}>
-        <MethodContext.Provider value={{register, login, logout}}>
+        <MethodContext.Provider value={{register, login, logout, updateUser}}>
           <NavBar />
           <Routes />
         </MethodContext.Provider>
