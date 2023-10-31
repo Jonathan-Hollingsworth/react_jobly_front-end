@@ -2,3 +2,7 @@
   text-align: center;
   background-color: #283c34;
 }
+
+input {
+  margin: 5px;
+}
