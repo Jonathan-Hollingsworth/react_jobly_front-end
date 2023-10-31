@@ -6,6 +6,7 @@ import JobList from './JobList'
 import UserSignupForm from './UserSignupForm'
 import UserLoginForm from './UserLoginForm'
 import Profile from './Profile'
+import Home from './Home'
 
 function Routes() {
     return(
@@ -16,7 +17,7 @@ function Routes() {
             <Route exact path='/profile'><Profile /></Route>
             <Route exact path='/login'><UserLoginForm /></Route>
             <Route exact path='/signup'><UserSignupForm /></Route>
-            <Route exact path='/'><h1>Coming soon</h1></Route>
+            <Route exact path='/'><Home /></Route>
             <Redirect to='/'/>
         </Switch>
     )
