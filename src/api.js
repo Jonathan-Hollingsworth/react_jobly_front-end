@@ -108,9 +108,6 @@ class JoblyApi {
     return res.applied;
   }
 
-  // obviously, you'll add a lot here ...
 }
-
-// for now, put token ("testuser" / "password" on class)
 
 export default JoblyApi
